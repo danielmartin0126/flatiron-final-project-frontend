@@ -32,8 +32,43 @@
   }
 }
 
+.flex {
+  display: flex;
+}
+
+.center {
+  justify-content: center;
+}
+
 .navbar {
   display: flex;
   flex-direction: row;
   justify-content: center;
+}
+
+.game {
+  margin-bottom:2%;
+}
+
+.gameContainer {
+  justify-content: center;
+}
+
+.buttonBar {
+  display: flex;
+  justify-content: center;
+  margin: 4%;
+}
+
+.ui.followButton {
+  margin-left: 25%;
+  margin-top: 10%;
+}
+
+.gamePageHeader {
+  margin-top: 5%;
+}
+
+.followers {
+  margin-top: 4%;
 }

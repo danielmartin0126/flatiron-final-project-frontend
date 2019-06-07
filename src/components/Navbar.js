@@ -1,5 +1,8 @@
 import React from 'react';
 import { Header, Icon } from 'semantic-ui-react'
+import {Route, withRouter } from 'react-router-dom'
+import {Link} from 'react-router-dom';
+
 
 
 class Navbar extends React.Component {
@@ -8,15 +11,21 @@ class Navbar extends React.Component {
        return(
         <div>
             <div className="ui pointing menu">
-                <a className="item">
-                Home
-                </a>
-                <a className="item">
-                Browse Games
-                </a>
-                <a className="item active">
-                My Profile
-                </a>
+                <Link to="/">
+                    <a className="item">
+                    Home
+                    </a>
+                </Link>
+                <Link to="/games">
+                    <a className="item">
+                    Browse Games
+                    </a>
+                </Link>
+                <Link to="/profile">
+                    <a className="item">
+                    My Profile
+                    </a>
+                </Link>
                 <div className="right menu">
                 <div className="item">
                     <div className="ui transparent icon input">
@@ -37,4 +46,4 @@ class Navbar extends React.Component {
 
 
 }
-export default Navbar;
+export default withRouter(Navbar);

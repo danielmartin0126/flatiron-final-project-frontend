@@ -36,8 +36,19 @@ class Game extends React.Component {
         return count.length
     }
 
+    listPosts = () => {
+        let postsList = this.props.posts.filter(post => post.game_id == this.state.currentGame.id)
+        return (
+            <div>
+                {postsList.map(post => <h4>{post.title}</h4>)}
+            </div>
+        )
+
+    }
+
     renderPage = () => {
         return (
+            <div>
             <div className="game ui grid flex center">
                 <div className="image gamePageHeader">
                     <img src={`https://steamcdn-a.akamaihd.net/steam/apps/${this.state.currentGame.app_id}/header.jpg`}/>
@@ -61,7 +72,18 @@ class Game extends React.Component {
                     </div>
                     
                 </div>
+                
                </div> 
+               <div className="ui divider"></div>
+               <div>
+                    <h2>Posts</h2>
+                    {console.log("itsa me",this.props)}
+                    {this.listPosts()}
+
+               </div>
+               </div>
+
+
         )
     }
 

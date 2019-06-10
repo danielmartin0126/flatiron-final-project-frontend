@@ -7,13 +7,32 @@ import {Link} from 'react-router-dom';
 
 class Navbar extends React.Component {
 
+    loggedIn = () => {
+        if (this.props.currentUser) {
+            return (<Link to="/login">
+                <a className="item" onClick={this.props.handleLogOut}>
+                    Log out
+                </a>
+                </Link>
+
+                )
+        }
+        else {
+            return(<Link to="/login">
+                <a className="item">
+                    Log in
+                </a>
+                </Link>)
+        }
+    }
+
     render(){
        return(
         <div>
             <div className="ui pointing menu">
                 <Link to="/">
                     <a className="item">
-                    Home
+                        Home
                     </a>
                 </Link>
                 <Link to="/games">
@@ -26,6 +45,7 @@ class Navbar extends React.Component {
                     My Profile
                     </a>
                 </Link>
+                {this.loggedIn()}
                 <div className="right menu">
                 <div className="item">
                     <div className="ui transparent icon input">

@@ -70,7 +70,7 @@ class Login extends React.Component {
                             {
                                 this.state.error && 
                                 <div className="ui error message">
-                                    OOF
+                                    Error
                                     </div>
                             }
                         </div>

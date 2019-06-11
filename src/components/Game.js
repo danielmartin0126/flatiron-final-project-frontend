@@ -2,6 +2,8 @@ import React from 'react';
 import { Header, Icon } from 'semantic-ui-react';
 import {Route, withRouter } from 'react-router-dom';
 import {Link} from 'react-router-dom';
+import PostCard from './PostCard';
+
 
 
 class Game extends React.Component {
@@ -19,8 +21,8 @@ class Game extends React.Component {
         })
 
     }
+
     componentDidMount(){
-        
         fetch(`http://localhost:3000/api/v1/games/${this.props.match.params["id"]}`)
         .then(r => r.json())
         .then(data => {
@@ -40,7 +42,7 @@ class Game extends React.Component {
         let postsList = this.props.posts.filter(post => post.game_id == this.state.currentGame.id)
         return (
             <div>
-                {postsList.map(post => <h4>{post.title}</h4>)}
+                {postsList.map(post => <PostCard post={post} users={this.props.users}/>)}
             </div>
         )
 
@@ -77,8 +79,9 @@ class Game extends React.Component {
                <div className="ui divider"></div>
                <div>
                     <h2>Posts</h2>
-                    {console.log("itsa me",this.props)}
-                    {this.listPosts()}
+                    <div className="ui container grid red">
+                        {this.listPosts()}
+                    </div>
 
                </div>
                </div>

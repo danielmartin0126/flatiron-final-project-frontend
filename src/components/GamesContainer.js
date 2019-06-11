@@ -17,7 +17,7 @@ class GamesContainer extends React.Component {
            <div>
                <h1>Popular Games</h1>
                <div className="ui grid gameContainer">
-                   {this.props.games.map(game => <GameCard game={game} followers={this.props.followers}/>)}
+                   {this.props.games.map(game => <GameCard game={game} followers={this.props.followers} games={this.props.games} currentUser={this.props.currentUser} handleGameFollower={this.props.handleGameFollower}/>)}
                </div>
             </div>
        )

@@ -12,7 +12,6 @@ class GamesCard extends React.Component {
 
     totalFollowers = () => {
         let count = this.props.followers.filter(follower => follower.game_id == this.props.game.id)
-        console.log("yahoo",count)
         return count.length
     }
 
@@ -25,6 +24,24 @@ class GamesCard extends React.Component {
           })
         })
 
+    }
+
+    handleFollowClick = (e) => {
+        console.log("follow", e)
+        
+        let followedGame = this.props.games.find(game=> game.id === e)
+        let user = this.props.currentUser
+        fetch(`http://localhost:3000/api/v1/followed_games`,
+        {
+            headers: {
+                "Accept": 'application/json',
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({user_id: user.id, game_id: followedGame.id, app_id: followedGame.app_id})
+        })
+        .then(r => r.json())
+        .then(data => console.log("posted", data))
     }
 
     render() {
@@ -52,7 +69,7 @@ class GamesCard extends React.Component {
                         </Link>
                     </div>
                     <div>
-                        <button className="mini ui icon button green followButton">
+                        <button className="mini ui icon button green followButton" onClick={()=>this.handleFollowClick(this.props.game.id)}>
                             <i className="plus icon"></i>
                         </button>
                     </div>

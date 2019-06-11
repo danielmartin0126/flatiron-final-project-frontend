@@ -6,6 +6,7 @@ import {Switch, Route, withRouter } from 'react-router-dom'
 import Home from './components/Home'
 import GamesContainer from './components/GamesContainer';
 import Game from './components/Game';
+import Post from './components/Post';
 import Login from './components/Login';
 import {Link} from 'react-router-dom';
 
@@ -17,7 +18,9 @@ class App extends React.Component {
     games: [],
     currentGame: null,
     followers: [],
-    posts: []
+    posts: [],
+    users: [],
+    comments: []
   }
 
 
@@ -59,10 +62,24 @@ class App extends React.Component {
             posts: data
         })
       })
+      fetch(`http://localhost:3000/api/v1/users`)
+      .then(r => r.json())
+      .then(data => {
+        this.setState({
+            users: data
+        })
+      })
+      fetch(`http://localhost:3000/api/v1/comments`)
+      .then(r => r.json())
+      .then(data => {
+        this.setState({
+            comments: data
+        })
+      })
   }
 
   handleLogIn = (user) => {
-    localStorage.setItem("token", user.id)
+    localStorage.setItem("token", user.token)
     this.setState({currentUser:user})
     this.props.history.push("home")
 
@@ -73,14 +90,23 @@ class App extends React.Component {
     this.setState({currentUser:null})
   }
 
+  handleGameFollower = (game) => {
+    this.setState({
+      followers: [...this.state.followers, game]
+
+    })
+
+  }
+
   render (){
     return (<div className="App">
       {console.log("app is rendering", this.state)}
       <Navbar currentUser={this.state.currentUser} handleLogOut={this.handleLogOut}/>
       <Route exact path="/" render={()=> <Home currentUser={this.state.currentUser}/>}/>
-      <Route exact path="/games" render={()=><GamesContainer games={this.state.games} currentUser={this.state.currentUser} followers={this.state.followers}/>}/>
-      <Route path="/games/:id" render={()=><Game followers={this.state.followers} currentUser={this.state.currentUser} posts={this.state.posts}/>}/>
+      <Route exact path="/games" render={()=><GamesContainer games={this.state.games} currentUser={this.state.currentUser} followers={this.state.followers} handleGameFollower={this.handleGameFollower}/>}/>
+      <Route path="/games/:id" render={()=><Game followers={this.state.followers} currentUser={this.state.currentUser} posts={this.state.posts} users={this.state.users}/>}/>
       <Route exact path="/login" render={()=> <Login handleLogIn={this.handleLogIn} currentUser={this.state.currentUser}/>}/>
+      <Route path="/posts/:id" render ={()=> <Post currentUser={this.state.currentUser} posts={this.state.posts} users={this.state.users} comments={this.state.comments}/>}/>
 
 
     </div>

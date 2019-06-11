@@ -72,3 +72,20 @@
 .followers {
   margin-top: 4%;
 }
+
+.showMe {
+  background-color: lightpink;
+  border-style: dashed;
+  border-width: thin;
+  border-color: red;
+}
+
+.showMeComments {
+  background-color: lightgreen;
+  border-style: dashed;
+  border-width: thin;
+  border-color: red;
+}
+
+.postHeader {
+}

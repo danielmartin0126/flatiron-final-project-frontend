@@ -8,7 +8,9 @@ import GamesContainer from './components/GamesContainer';
 import Game from './components/Game';
 import Post from './components/Post';
 import Login from './components/Login';
+import Profile from './components/Profile';
 import {Link} from 'react-router-dom';
+import UserProfile from './components/UserProfile';
 
 
 
@@ -81,7 +83,7 @@ class App extends React.Component {
   handleLogIn = (user) => {
     localStorage.setItem("token", user.token)
     this.setState({currentUser:user})
-    this.props.history.push("home")
+    this.props.history.push("/")
 
   }
 
@@ -91,11 +93,20 @@ class App extends React.Component {
   }
 
   handleGameFollower = (game) => {
+    console.log("follow update")
     this.setState({
-      followers: [...this.state.followers, game]
+      followers: [...this.state.followers, {game_id: game.id}]
 
     })
+  }
 
+  handleDeleteFollower = (follow) => {
+    console.log("remove follow")
+    let followers = this.state.followers
+    followers.splice(-1,1)
+    this.setState({
+      followers: [this.state.followers.length - 1]
+    })
   }
 
   render (){
@@ -103,11 +114,12 @@ class App extends React.Component {
       {console.log("app is rendering", this.state)}
       <Navbar currentUser={this.state.currentUser} handleLogOut={this.handleLogOut}/>
       <Route exact path="/" render={()=> <Home currentUser={this.state.currentUser}/>}/>
-      <Route exact path="/games" render={()=><GamesContainer games={this.state.games} currentUser={this.state.currentUser} followers={this.state.followers} handleGameFollower={this.handleGameFollower}/>}/>
+      <Route exact path="/games" render={()=><GamesContainer games={this.state.games} currentUser={this.state.currentUser} followers={this.state.followers} handleDeleteFollower={this.handleDeleteFollower} handleGameFollower={this.handleGameFollower}/>}/>
       <Route path="/games/:id" render={()=><Game followers={this.state.followers} currentUser={this.state.currentUser} posts={this.state.posts} users={this.state.users}/>}/>
       <Route exact path="/login" render={()=> <Login handleLogIn={this.handleLogIn} currentUser={this.state.currentUser}/>}/>
       <Route path="/posts/:id" render ={()=> <Post currentUser={this.state.currentUser} posts={this.state.posts} users={this.state.users} comments={this.state.comments}/>}/>
-
+      <Route exact path="/profile" render={()=> <Profile currentUser={this.state.currentUser} followers={this.state.followers} posts={this.state.posts} games={this.state.games}/>}/>
+      <Route path="/profile/:id" render={()=> <UserProfile currentUser={this.state.currentUser} followers={this.state.followers} posts={this.state.posts} games={this.state.games}/>}/>
 
     </div>
     )

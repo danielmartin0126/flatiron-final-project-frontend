@@ -40,6 +40,10 @@
   justify-content: center;
 }
 
+.marginTop {
+  margin-top: 10%;
+}
+
 .navbar {
   display: flex;
   flex-direction: row;

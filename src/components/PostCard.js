@@ -26,7 +26,7 @@ class PostCard extends React.Component {
 
        return(
           <Link to={`/posts/${this.props.post.id}`}>
-            <div className="ui container postcard showMe">
+            <div className="ui container postcard">
                <h3>{this.props.post.title}</h3>
                {console.log("ayy", this.props.users)}
                <h4>{this.getPostAuthor()}</h4>

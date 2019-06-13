@@ -3,7 +3,7 @@ import { Header, Icon } from 'semantic-ui-react';
 import {Route, withRouter } from 'react-router-dom';
 import {Link} from 'react-router-dom';
 import PostCard from './PostCard';
-
+import PostModal from './Game';
 
 
 class Game extends React.Component {
@@ -30,11 +30,14 @@ class Game extends React.Component {
               currentGame: data
           })
         })
+        console.log("pls god", this.props)
     }
 
     totalFollowers = () => {
+        
         let count = this.props.followers.filter(follower => follower.game_id == this.state.currentGame.id)
         console.log("yahoo",count)
+        console.log("followers",this.props.followers)
         return count.length
     }
 
@@ -49,6 +52,7 @@ class Game extends React.Component {
     }
 
     renderPage = () => {
+        console.log("PROPS", this.props)
         return (
             <div>
             <div className="game ui grid flex center">
@@ -64,7 +68,7 @@ class Game extends React.Component {
                 <div className="extra content flex followers">
                     <p>
                         <i className="user icon"></i>
-                        {this.totalFollowers()} Followers
+                        {this.props.posts ? this.totalFollowers(): null} Followers
                     
                     </p>
                     <div>
@@ -79,6 +83,7 @@ class Game extends React.Component {
                <div className="ui divider"></div>
                <div>
                     <h2>Posts</h2>
+                    <h4>Create new post</h4>
                     <div className="ui container grid red">
                         {this.listPosts()}
                     </div>
@@ -132,6 +137,8 @@ class Game extends React.Component {
 
 
     render() {
+        console.log("danny",this.props);
+        
        return(
                <div className="ui flex">
                     {this.state.currentGame ? this.renderPage() : this.waitRender()}

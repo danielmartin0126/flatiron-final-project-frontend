@@ -22,7 +22,6 @@ class ProfileGameCard extends React.Component {
     
     renderFollowButton = () => {
         let checkFollow = this.props.followers.filter(follower => follower.game_id == this.props.game.id)
-        console.log("check follow", checkFollow)
         if (checkFollow.length) {
             return(<button className="mini ui icon button green followButton" onClick={this.handleUnfollowClick}>
                 <i className="heart icon"></i>
@@ -38,24 +37,25 @@ class ProfileGameCard extends React.Component {
 
     render() {
        return(
-          
                <div className="game">
+
                <div className="ui card">
 
                 <div className="image">
-                        <img src={`https://steamcdn-a.akamaihd.net/steam/apps/${this.props.game.app_id}/header.jpg`} />
+                    <img src={this.props.game ? `https://steamcdn-a.akamaihd.net/steam/apps/${this.props.game.app_id}/header.jpg`: 'https://i.imgur.com/ajXW2td.jpg'}/>
                 </div>
                 <div className="content">
-                    <a className="header">{this.props.game.name}</a>
+                    <Link to={this.props.game ? `/games/${this.props.game.id}`: null}>
+                        <a className="header">{this.props.game ? this.props.game.name: null}</a>
+                    </Link>
                     <div className="meta">
                     </div>
                     <div className="description">
-                        {console.log("properonis",this.props)}
                     </div>
                 </div>
                 <div className="buttonBar">
                     <div>
-                        <Link to={`/games/${this.props.game.id}`}>
+                        <Link to={this.props.game ? `/games/${this.props.game.id}`: null}>
                             <button className="ui button inverted green ">
                                 View Game
                             </button>
@@ -68,9 +68,6 @@ class ProfileGameCard extends React.Component {
                     </div>
 
                 </div>
-                <div className="extra content">
-                </div>
-
                     </div>
                </div> 
        )

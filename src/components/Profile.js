@@ -11,7 +11,8 @@ import ProfileGameCard from './ProfileGameCard'
 class Profile extends React.Component {
     
     state = {
-        followedGames: []
+        followedGames: [],
+        userPosts: [],
     }
 
     componentDidMount() {
@@ -20,7 +21,7 @@ class Profile extends React.Component {
         currentFollows.map(follow=> games.find(game=> game.id === follow.game_id))
         this.setState({
             followedGames: currentFollows
-        },console.log("pls", this.state))
+        })
     }
 
     renderUserInfo = () => {
@@ -33,16 +34,33 @@ class Profile extends React.Component {
         }
     }
 
+    getGameNameFromPostID = (poster_id) => {
+        let game = this.props.games.find(game => game.id === poster_id)
+        return game.name
+    }
+
+    renderUserPosts = () => {
+        if (this.props.posts.length) {
+            let posts= this.props.posts.filter(post => post.poster_id === this.props.currentUser.id)
+            console.log("poots", posts)
+            return (
+                <div>
+                    {posts.map(post => <div className="post showMe"><h3>{this.getGameNameFromPostID(post.game_id)}</h3><PostCard users={this.props.users} post={post}/></div>)}
+                </div>
+            )
+        }
+    }
+
 
     renderFollowedGames = () => {
         if (this.props.currentUser) {
             let currentFollows = this.props.followers.filter(follower => this.props.currentUser.id == follower.user_id)
             let games = this.props.games
             let followedGames = []
-            console.log("before", currentFollows)
+            // console.log("before", currentFollows)
             currentFollows.map(follow=> followedGames.push(games.find(game=> game.id === follow.game_id)))
             let followed = this.props.followers.filter(follower => this.props.currentUser.id == follower.user_id)
-            console.log("following", followedGames)
+            // console.log("following", followedGames)
     
             return(
                 <div className="followedGameCard ui grid">
@@ -64,12 +82,14 @@ class Profile extends React.Component {
        return(
                <div className="ui flex">
                     {this.renderUserInfo()}
-                    {console.log("i am game",this.props.match.params["id"])}
-                    {console.log("I AM THE SENATE", this.props)}
+                    {console.log("oog", this.props.posts)}
+
+             
                     <div className="followedGames marginTop">
                         <h3>Your followed games</h3>
                         {this.renderFollowedGames()}
                         <h3>Your Posts</h3>
+                        {this.renderUserPosts()}
 
                     </div>
                </div> 

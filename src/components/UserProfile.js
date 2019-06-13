@@ -55,12 +55,29 @@ class UserProfile extends React.Component {
     
             return(
                 <div className="followedGameCard ui grid">
-                    {followedGames.map(game=> <ProfileGameCard game={game} followers={this.props.followers} games={this.props.games} currentUser={this.props.currentUser}/>)}
+                    {followedGames.length ? followedGames.map(game=> <ProfileGameCard game={game} followers={this.props.followers} games={this.props.games} currentUser={this.props.currentUser}/>):<div className="showMe"><h5>Not yet following any games</h5></div>}
                 </div>
             )
 
         }
 
+    }
+
+    getGameNameFromPostID = (poster_id) => {
+        let game = this.props.games.find(game => game.id === poster_id)
+        return game.name
+    }
+
+    renderUserPosts = () => {
+        if (this.props.posts.length) {
+            let posts= this.props.posts.filter(post => post.poster_id === this.state.userProfile.id)
+            console.log("poots", posts)
+            return (
+                <div>
+                    { posts.length ? posts.map(post => <div className="post showMe"><h3>{this.getGameNameFromPostID(post.game_id)}</h3><PostCard users={this.props.users} post={post}/></div>): <div className="showMe"><h5>No available posts</h5></div>}
+                </div>
+            )
+        }
     }
 
 
@@ -78,7 +95,10 @@ class UserProfile extends React.Component {
                     {console.log("I AM THE SENATE", this.props)} */}
                     <div className="followedGames marginTop">
                         <h2>Followed Games</h2>
+                        {console.log("up", this.props.followers)}
                         {this.renderFollowedGames()}
+                        <h3>{this.state.userProfile.name} posts</h3>
+                        {this.renderUserPosts()}
 
                     </div>
                </div> 

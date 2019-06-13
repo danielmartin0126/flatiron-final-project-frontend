@@ -3,7 +3,7 @@ import { Header, Icon } from 'semantic-ui-react';
 import {Route, withRouter } from 'react-router-dom';
 import {Link} from 'react-router-dom';
 import PostCard from './PostCard';
-import PostModal from './Game';
+import PostModal from './PostModal';
 
 
 class Game extends React.Component {
@@ -27,6 +27,7 @@ class Game extends React.Component {
         .then(r => r.json())
         .then(data => {
           this.setState({
+              isOpen: false,
               currentGame: data
           })
         })
@@ -84,6 +85,7 @@ class Game extends React.Component {
                <div>
                     <h2>Posts</h2>
                     <h4>Create new post</h4>
+                    <PostModal currentUser={this.props.currentUser} currentGame={this.state.currentGame} />
                     <div className="ui container grid red">
                         {this.listPosts()}
                     </div>
@@ -135,6 +137,9 @@ class Game extends React.Component {
         </div> )
     }
 
+  
+
+ 
 
     render() {
         console.log("danny",this.props);

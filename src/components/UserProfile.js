@@ -64,20 +64,57 @@ class UserProfile extends React.Component {
     }
 
     getGameNameFromPostID = (poster_id) => {
+        // console.log("checking post", poster_id)
         let game = this.props.games.find(game => game.id === poster_id)
+        // console.log("checking game", game)
+
         return game.name
     }
 
     renderUserPosts = () => {
         if (this.props.posts.length) {
             let posts= this.props.posts.filter(post => post.poster_id === this.state.userProfile.id)
-            console.log("poots", posts)
+            // console.log("poots", posts)
             return (
                 <div>
-                    { posts.length ? posts.map(post => <div className="post showMe"><h3>{this.getGameNameFromPostID(post.game_id)}</h3><PostCard users={this.props.users} post={post}/></div>): <div className="showMe"><h5>No available posts</h5></div>}
+                    { posts.length && this.props.games.length ? posts.map(post => <div className="post showMe"><h3>{this.getGameNameFromPostID(post.game_id)}</h3><PostCard users={this.props.users} post={post}/></div>): <div className="showMe"><h5>No available posts</h5></div>}
                 </div>
             )
         }
+    }
+
+    renderFriendButton = () => {
+        let checkFriend = this.props.friends.find(friend => friend.user_id === this.props.currentUser.id && friend.friend_id === this.state.userProfile.id)
+        console.log("check Friend", checkFriend)
+        if (checkFriend) {
+            return(<button className="mini ui icon button green followButton" onClick={()=> console.log("unfriend")}>
+                <i className="heart icon"></i>
+            </button>)
+
+        } else {
+            return (<button className="mini ui icon button green followButton" onClick={this.handleFriendClick}>
+                <i className="plus icon"></i>
+            </button>)
+        }
+
+    }
+
+    handleFriendClick = () => {
+        let friend = this.props.users.find(user=> user.id === this.state.userProfile.id)
+        console.log("friend req",friend)
+        let user = this.props.currentUser
+        // this.props.handleGameFollower(followedGame)
+        fetch(`http://localhost:3000/api/v1/friends`,
+        {
+            headers: {
+                "Accept": 'application/json',
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({user_id: user.id, friend_id: this.state.userProfile.id})
+        })
+        .then(r => r.json())
+        .then(data =>  this.props.handleFriendReq(data))
     }
 
 
@@ -90,7 +127,10 @@ class UserProfile extends React.Component {
        return(
                <div className="ui flex">
                    {/* {console.log("user prof state",this.state)} */}
+                   <div className="userInfo">
                     {this.renderUserInfo()}
+                    {this.renderFriendButton()}
+                   </div>
                     {/* {console.log("i am game",this.props.match.params["id"])}
                     {console.log("I AM THE SENATE", this.props)} */}
                     <div className="followedGames marginTop">

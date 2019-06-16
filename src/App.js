@@ -22,7 +22,8 @@ class App extends React.Component {
     followers: [],
     posts: [],
     users: [],
-    comments: []
+    comments: [],
+    friends: []
   }
 
 
@@ -78,13 +79,19 @@ class App extends React.Component {
             comments: data
         })
       })
+      fetch(`http://localhost:3000/api/v1/friends`)
+      .then(r => r.json())
+      .then(data => {
+        this.setState({
+            friends: data
+        })
+      })
   }
 
   handleLogIn = (user) => {
     localStorage.setItem("token", user.token)
     this.setState({currentUser:user})
     this.props.history.push("/")
-
   }
 
   handleLogOut = () => {
@@ -96,6 +103,14 @@ class App extends React.Component {
     console.log("follow update")
     this.setState({
       followers: [...this.state.followers, {game_id: game.id}]
+
+    })
+  }
+
+  handleFriendReq = (friendship) => {
+    console.log("friend update",friendship)
+    this.setState({
+      friends: [...this.state.friends, {user_id: friendship.user_id, friend_id: friendship.friend_id}]
 
     })
   }
@@ -120,7 +135,7 @@ class App extends React.Component {
       <Route exact path="/login" render={()=> <Login handleLogIn={this.handleLogIn} currentUser={this.state.currentUser}/>}/>
       <Route path="/posts/:id" render ={()=> <Post currentUser={this.state.currentUser} posts={this.state.posts} users={this.state.users} comments={this.state.comments}/>}/>
       <Route exact path="/profile" render={()=> <Profile currentUser={this.state.currentUser} followers={this.state.followers} posts={this.state.posts} games={this.state.games} users={this.state.users}/>}/>
-      <Route path="/profile/:id" render={()=> <UserProfile currentUser={this.state.currentUser} followers={this.state.followers} posts={this.state.posts} games={this.state.games} users={this.state.users}/>}/>
+      <Route path="/profile/:id" render={()=> <UserProfile currentUser={this.state.currentUser} handleFriendReq={this.handleFriendReq} friends={this.state.friends} followers={this.state.followers} posts={this.state.posts} games={this.state.games} users={this.state.users}/>}/>
 
     </div>:null}
     </>

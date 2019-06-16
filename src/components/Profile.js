@@ -51,6 +51,8 @@ class Profile extends React.Component {
         }
     }
 
+  
+
 
     renderFollowedGames = () => {
         if (this.props.currentUser) {

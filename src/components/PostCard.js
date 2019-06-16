@@ -10,8 +10,8 @@ class PostCard extends React.Component {
 
 
     getPostAuthor = () => {
-        console.log("post",this.props.post)
-       console.log("oot",this.props.users.find( user => user.id == this.props.post.poster_id))
+    //     console.log("post",this.props.post)
+    //    console.log("oot",this.props.users.find( user => user.id == this.props.post.poster_id))
        let user = this.props.users.find( user => user.id == this.props.post.poster_id)
        if (user) {
            return user.name
@@ -28,7 +28,7 @@ class PostCard extends React.Component {
           <Link to={`/posts/${this.props.post.id}`}>
             <div className="ui container postcard">
                <h3>{this.props.post.title}</h3>
-               {console.log("ayy", this.props.users)}
+               {/* {console.log("ayy", this.props.users)} */}
                <h4>{this.getPostAuthor()}</h4>
             </div>
           </Link>

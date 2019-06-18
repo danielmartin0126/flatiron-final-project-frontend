@@ -93,3 +93,28 @@
 
 .postHeader {
 }
+
+body {
+  background-color: #4c5c86;
+  color: #46494C;
+
+}
+
+.navbar.menu {
+  background-color: #46494c;
+  color: #C5C3C6;
+}
+
+.border.selectBorder {
+  border-style: ridge;
+  border-color: #C5C3C6;
+}
+
+.fontColor {
+  color: #46494C;
+}
+
+.lavenderGray.fontColor.navbar {
+  color: #C5C3C6;
+  font-weight: bolder;
+}

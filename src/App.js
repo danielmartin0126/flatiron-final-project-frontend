@@ -15,21 +15,24 @@ import UserProfile from './components/UserProfile';
 
 
 class App extends React.Component {
+
   state = {
     currentUser: null,
     games: [],
+    filteredGames: [],
+    searchTerm: "",
     currentGame: null,
     followers: [],
     posts: [],
     users: [],
     comments: [],
-    friends: []
+    friends: [],
+    apiGames: []
   }
 
 
   componentDidMount() {
     const token = localStorage.getItem("token")
-    console.log(token)
     if (token) {
       fetch("http://localhost:3000/api/v1/current_user", {
         headers: {
@@ -48,7 +51,7 @@ class App extends React.Component {
       .then(r => r.json())
       .then(data => {
         this.setState({
-          games:data
+          games: data.sort( () => Math.random() - 0.5)
         })
       })
       fetch(`http://localhost:3000/api/v1/followed_games`)
@@ -124,17 +127,37 @@ class App extends React.Component {
     })
   }
 
+  handleGameSearch = (searchTerm) => {
+    if (this.props.location.pathname !== "/games") {
+      this.props.history.push("/games")
+    }
+    let filtered = this.state.games.filter(game => game.name.toLowerCase().includes(searchTerm.toLowerCase()))
+    console.log("filtered",filtered)
+    this.setState({
+      filteredGames: filtered,
+      searchTerm: searchTerm
+    })
+  }
+
+  handleGamesAdded = (game) => {
+    console.log('adding to results', game)
+    this.setState({
+      filteredGames: [...this.state.filteredGames, game]
+    })
+
+  }
+
   render (){
       {console.log("app is rendering", this.state)}
     return (<>
       {this.state.posts.length ? <div className="App">
-      <Navbar currentUser={this.state.currentUser} handleLogOut={this.handleLogOut}/>
+      <Navbar currentUser={this.state.currentUser} handleLogOut={this.handleLogOut} handleGameSearch={this.handleGameSearch}/>
       <Route exact path="/" render={()=> <Home currentUser={this.state.currentUser}/>}/>
-      <Route exact path="/games" render={()=><GamesContainer games={this.state.games} currentUser={this.state.currentUser} followers={this.state.followers} handleDeleteFollower={this.handleDeleteFollower} handleGameFollower={this.handleGameFollower}/>}/>
+      <Route exact path="/games" render={()=><GamesContainer games={this.state.games} apiGames={this.state.apiGames} handleGamesAdded={this.handleGamesAdded} searchTerm={this.state.searchTerm} filteredGames={this.state.filteredGames} currentUser={this.state.currentUser} followers={this.state.followers} handleDeleteFollower={this.handleDeleteFollower} handleGameFollower={this.handleGameFollower}/>}/>
       <Route path="/games/:id" render={()=><Game followers={this.state.followers} currentUser={this.state.currentUser} posts={this.state.posts} users={this.state.users}/>}/>
       <Route exact path="/login" render={()=> <Login handleLogIn={this.handleLogIn} currentUser={this.state.currentUser}/>}/>
       <Route path="/posts/:id" render ={()=> <Post currentUser={this.state.currentUser} posts={this.state.posts} users={this.state.users} comments={this.state.comments}/>}/>
-      <Route exact path="/profile" render={()=> <Profile currentUser={this.state.currentUser} followers={this.state.followers} posts={this.state.posts} games={this.state.games} users={this.state.users}/>}/>
+      <Route exact path="/profile" render={()=> <Profile currentUser={this.state.currentUser} followers={this.state.followers} posts={this.state.posts} games={this.state.games} users={this.state.users} friends={this.state.friends}/>}/>
       <Route path="/profile/:id" render={()=> <UserProfile currentUser={this.state.currentUser} handleFriendReq={this.handleFriendReq} friends={this.state.friends} followers={this.state.followers} posts={this.state.posts} games={this.state.games} users={this.state.users}/>}/>
 
     </div>:null}

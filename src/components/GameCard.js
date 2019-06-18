@@ -60,7 +60,7 @@ class GamesCard extends React.Component {
     
     renderFollowButton = () => {
         let checkFollow = this.props.followers.filter(follower => follower.game_id == this.props.game.id)
-        console.log("check follow", checkFollow)
+        // console.log("check follow", checkFollow)
         if (checkFollow.length) {
             return(<button className="mini ui icon button green followButton" onClick={this.handleUnfollowClick}>
                 <i className="heart icon"></i>

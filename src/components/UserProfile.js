@@ -84,19 +84,20 @@ class UserProfile extends React.Component {
     }
 
     renderFriendButton = () => {
-        let checkFriend = this.props.friends.find(friend => friend.user_id === this.props.currentUser.id && friend.friend_id === this.state.userProfile.id)
-        console.log("check Friend", checkFriend)
-        if (checkFriend) {
-            return(<button className="mini ui icon button green followButton" onClick={()=> console.log("unfriend")}>
-                <i className="heart icon"></i>
-            </button>)
-
-        } else {
-            return (<button className="mini ui icon button green followButton" onClick={this.handleFriendClick}>
-                <i className="plus icon"></i>
-            </button>)
+        if (this.props.friends.length) {
+            let checkFriend = this.props.friends.find(friend => friend.user_id === this.props.currentUser.id && friend.friend_id === this.state.userProfile.id)
+            console.log("check Friend", checkFriend)
+            if (checkFriend) {
+                return(<button className="mini ui icon button green followButton" onClick={()=> console.log("unfriend")}>
+                    <i className="heart icon"></i>
+                </button>)
+    
+            } else {
+                return (<button className="mini ui icon button green followButton" onClick={this.handleFriendClick}>
+                    <i className="plus icon"></i>
+                </button>)
+            }
         }
-
     }
 
     handleFriendClick = () => {
@@ -117,6 +118,26 @@ class UserProfile extends React.Component {
         .then(data =>  this.props.handleFriendReq(data))
     }
 
+    getFriendURL = (friend) => {
+        return `/profile/${friend.friend_id}`
+    }
+
+    renderFriends = () => {
+        if (this.state.userProfile && this.props.friends.length) {
+            console.log("this persons friends",this.props.friends.filter(friend => friend.user_id === this.state.userProfile.id))
+            let friends = this.props.friends.filter(friend => friend.user_id === this.state.userProfile.id)
+            if (this.props.users.length) {
+                return (
+                    <div className="friends">
+                        <h4>Friends</h4>
+                       {friends.map(friend => <a href={`/profile/${friend.friend_id}`}>{this.props.users.find(user => user.id === friend.friend_id).name}</a>)} 
+                    </div>
+                )
+            }
+
+        }
+    }
+
 
     
 
@@ -135,10 +156,11 @@ class UserProfile extends React.Component {
                     {console.log("I AM THE SENATE", this.props)} */}
                     <div className="followedGames marginTop">
                         <h2>Followed Games</h2>
-                        {console.log("up", this.props.followers)}
+                        {/* {console.log("up", this.props.followers)} */}
                         {this.renderFollowedGames()}
                         <h3>{this.state.userProfile.name} posts</h3>
                         {this.renderUserPosts()}
+                        {this.renderFriends()}
 
                     </div>
                </div> 

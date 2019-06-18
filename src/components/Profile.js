@@ -16,12 +16,14 @@ class Profile extends React.Component {
     }
 
     componentDidMount() {
-        let currentFollows = this.props.followers.filter(follower => this.props.currentUser.id == follower.user_id)
-        let games = this.props.games
-        currentFollows.map(follow=> games.find(game=> game.id === follow.game_id))
-        this.setState({
-            followedGames: currentFollows
-        })
+        if (this.props.currentUser) {
+            let currentFollows = this.props.followers.filter(follower => this.props.currentUser.id == follower.user_id)
+            let games = this.props.games
+            currentFollows.map(follow=> games.find(game=> game.id === follow.game_id))
+            this.setState({
+                followedGames: currentFollows
+            })
+        }
     }
 
     renderUserInfo = () => {
@@ -40,7 +42,7 @@ class Profile extends React.Component {
     }
 
     renderUserPosts = () => {
-        if (this.props.posts.length) {
+        if (this.props.posts.length && this.props.currentUser) {
             let posts= this.props.posts.filter(post => post.poster_id === this.props.currentUser.id)
             console.log("poots", posts)
             return (
@@ -69,9 +71,23 @@ class Profile extends React.Component {
                     {followedGames.length ? followedGames.map(game=> <ProfileGameCard game={game} followers={this.props.followers} games={this.props.games} currentUser={this.props.currentUser}/>): console.log("not following shit")}
                 </div>
             )
+        }
+    }
+
+    renderFriends = () => {
+        if (this.props.currentUser && this.props.friends.length) {
+            console.log("my friends",this.props.friends.filter(friend => friend.user_id === this.props.currentUser.id))
+            let friends = this.props.friends.filter(friend => friend.user_id === this.props.currentUser.id)
+            if (this.props.users.length) {
+                return (
+                    <div className="friends">
+                        <h4>Friends</h4>
+                       {friends.map(friend => <a href={`/profile/${friend.friend_id}`}>{this.props.users.find(user => user.id === friend.friend_id).name}</a>)} 
+                    </div>
+                )
+            }
 
         }
-
     }
 
 
@@ -92,6 +108,7 @@ class Profile extends React.Component {
                         {this.renderFollowedGames()}
                         <h3>Your Posts</h3>
                         {this.renderUserPosts()}
+                        {this.renderFriends()}
 
                     </div>
                </div> 

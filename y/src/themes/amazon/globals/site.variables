@@ -34,7 +34,7 @@
 @tabletBreakpoint: @largeMonitorBreakpoint;
 
 /* Colors */
-@blue: #80A6CD;
+@blue: #4C5C86;
 @green: #60B044;
 @orange: #D26911;
 

@@ -68,8 +68,7 @@ class Navbar extends React.Component {
                 <div className="item">
                     <div className="ui transparent icon input">
                         <form onSubmit={this.handleSearch}>
-                            <input type="text" placeholder="Search games" name="search" onChange={this.handleChange}></input>
-                            <i className="search link icon"></i>
+                            <input type="text" placeholder="Search games" name="search" id="searchBar" onChange={this.handleChange}></input>
                         </form>
                     </div>
                 </div>

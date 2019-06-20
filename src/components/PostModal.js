@@ -51,21 +51,21 @@ class PostModal extends React.Component {
 
     render() {
         return(
-  <Modal trigger={<Button className="ui mini icon button green followButton"><i className="plus icon"></i></Button>} open={this.state.isOpen} onOpen={this.handleOpen} onClose={this.handleClose}>
+  <Modal trigger={<Button className="ui mini icon button blueFollowerButton yes okay cmon" id="newPostButton"><i className="plus icon"></i></Button>} open={this.state.isOpen} onOpen={this.handleOpen} onClose={this.handleClose}>
       {this.props.onOpen}
-    <Modal.Header>Create a post</Modal.Header>
-    <Modal.Content>
+    <Modal.Header className="modalColor yes okay cmon">Create a post</Modal.Header>
+    <Modal.Content className="modalColor yes okay cmon">
         <Form className="lol" onSubmit={(e)=>this.handlePostSubmit(e)}>
             <Form.Field onChange={this.handleTitleChange}>
                 <label>Title</label>
-                <input />
+                <input className="inputField"/>
             </Form.Field>
             <Form.Field onChange={this.handlePostChange}> 
                 <label>Post</label>
-                <Form.TextArea>
+                <Form.TextArea className="inputField yes okay cmon postModal">
                 </Form.TextArea>
             </Form.Field>
-            <Button type='submit'>Submit</Button>
+            <Button type='submit' id="postSubmit">Submit</Button>
         </Form>
     </Modal.Content>
   </Modal>

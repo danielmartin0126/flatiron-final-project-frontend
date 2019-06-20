@@ -18,6 +18,13 @@ class PostCard extends React.Component {
        }
     }
 
+    numberOfComments = () => {
+        if (this.props.comments.length) {
+            let commentCount = this.props.comments.filter(comment => comment.post_id === this.props.post.id)
+            return `${commentCount.length} comments`
+        }
+    }
+
 
    
 
@@ -25,11 +32,12 @@ class PostCard extends React.Component {
     render(){
 
        return(
-          <Link to={`/posts/${this.props.post.id}`}>
-            <div className="ui container postcard">
-               <h3>{this.props.post.title}</h3>
+          <Link to={`/posts/${this.props.post.id}`} className="blackText">
+            <div className="ui container ">
+               <h2 id="postCardTitle">{this.props.post.title}</h2>
+               <h5 id="postCardCommentCount">{this.numberOfComments()}</h5>
                {/* {console.log("ayy", this.props.users)} */}
-               <h4>{this.getPostAuthor()}</h4>
+               <h3 id="postCardAuthor">{this.getPostAuthor()}</h3>
             </div>
           </Link>
        )

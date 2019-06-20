@@ -56,17 +56,20 @@ class Post extends React.Component {
     render(){
 
        return(
-           <div className="postHeader showMe">
-               <h1>{this.state.currentPost ? this.state.currentPost.title : "Lorem Ipsum"}</h1>
-               <h5>{this.state.currentPost ? this.state.currentPost.content : "Lorem Ipsum"}</h5>
-               {this.state.currentPost ? <a href={this.getPostAuthorID()}> {this.getPostAuthor()} </a>: "Lorem Ipsum"}
+           <div className="postHeader">
+               <h1 id="postTitle">{this.state.currentPost ? this.state.currentPost.title : "Lorem Ipsum"}</h1>
+               <h5 id="postBody">{this.state.currentPost ? this.state.currentPost.content : "Lorem Ipsum"}</h5>
+               {this.state.currentPost ? <a id="postAuthor" href={this.getPostAuthorID()}> {this.getPostAuthor()} </a>: "Lorem Ipsum"}
                {console.log("post",this.state)}
-               <div className="comments">
-                   <h4>Add a comment</h4>
+               <div className="ui divider" id="gamedivider"></div>
+
+               <div id="addComments" className="comments postBox">
+                   <h4 id="addAComment">Add a comment</h4>
                {this.state.currentPost ? <CommentModal currentUser={this.props.currentUser} currentGame={this.props.currentGame} currentPost={this.state.currentPost}/>: null}
- 
-                  {this.renderComments()}
                </div>
+                <div className="ui container grid">
+                  {this.renderComments()}
+                </div>
             </div>
        )
     }

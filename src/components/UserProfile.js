@@ -36,7 +36,7 @@ class UserProfile extends React.Component {
         if (this.state.userProfile) {
             return(
                 <div className="userInfo">
-                    <h1>{this.state.userProfile.name}</h1>
+                    <h1 id="userInfo">{this.state.userProfile.name}</h1>
                 </div>
             )
         }
@@ -54,9 +54,13 @@ class UserProfile extends React.Component {
             // console.log("following", followedGames)
     
             return(
-                <div className="followedGameCard ui grid">
-                    {followedGames.length ? followedGames.map(game=> <ProfileGameCard game={game} followers={this.props.followers} games={this.props.games} currentUser={this.props.currentUser}/>):<div className="showMe"><h5>Not yet following any games</h5></div>}
+                <div>
+                    <div className="followedGameCard ui grid">
+                        {followedGames.length ? followedGames.map(game=> <ProfileGameCard game={game} followers={this.props.followers} games={this.props.games} currentUser={this.props.currentUser}/>):<div id="notFollowing" className=""><h5>Not yet following any games</h5></div>}
+                    </div>
+                    <div className="ui divider" id="gamedivider"></div>
                 </div>
+
             )
 
         }
@@ -77,7 +81,7 @@ class UserProfile extends React.Component {
             // console.log("poots", posts)
             return (
                 <div>
-                    { posts.length && this.props.games.length ? posts.map(post => <div className="post showMe"><h3>{this.getGameNameFromPostID(post.game_id)}</h3><PostCard users={this.props.users} post={post}/></div>): <div className="showMe"><h5>No available posts</h5></div>}
+                    { posts.length && this.props.games.length ? posts.map(post => <div className="post postcard lined posts"><a href={'/games/' + post.game_id} className="blackText">{this.getGameNameFromPostID(post.game_id)}</a><PostCard users={this.props.users} post={post} comments={this.props.comments}/></div>): <div id="notFollowing"><h5>No available posts</h5></div>}
                 </div>
             )
         }
@@ -86,14 +90,13 @@ class UserProfile extends React.Component {
     renderFriendButton = () => {
         if (this.props.friends.length) {
             let checkFriend = this.props.friends.find(friend => friend.user_id === this.props.currentUser.id && friend.friend_id === this.state.userProfile.id)
-            console.log("check Friend", checkFriend)
             if (checkFriend) {
-                return(<button className="mini ui icon button green followButton" onClick={()=> console.log("unfriend")}>
+                return(<button className="mini ui icon button blueFollowButton yes okay cmon" id="friendReqButton" onClick={()=> console.log("unfriend")}>
                     <i className="heart icon"></i>
                 </button>)
     
             } else {
-                return (<button className="mini ui icon button green followButton" onClick={this.handleFriendClick}>
+                return (<button className="mini ui icon button blueFollowButton yes okay cmon" id="friendReqButton" onClick={this.handleFriendClick}>
                     <i className="plus icon"></i>
                 </button>)
             }

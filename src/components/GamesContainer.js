@@ -74,14 +74,14 @@ class GamesContainer extends React.Component {
     render(){
 
        return(
-           <div>
+           <div className="outer space">
                <h1>Popular Games</h1>
                <div className="ui grid gameContainer">
                    {this.renderGames()}
                    {this.fetchAPIGames()}
                    {this.renderAPIGames()}
                </div>
-               <Button className="red loadMore" onClick={this.loadMore}>
+               <Button className="loadMore yes okay cmon" onClick={this.loadMore}>
                    Load More
                </Button>
             </div>

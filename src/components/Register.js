@@ -14,7 +14,7 @@ const initialState = {
 
 
 
-class Login extends React.Component {
+class Register extends React.Component {
     
     constructor() {
         super();
@@ -23,7 +23,7 @@ class Login extends React.Component {
 
     handleSubmit = e => {
         e.preventDefault()
-        fetch('http://localhost:3000/api/v1/auth', {
+        fetch('http://localhost:3000/api/v1/users', {
             method: "POST",
             headers: {
                 'Content-Type' : 'application/json',
@@ -63,7 +63,7 @@ class Login extends React.Component {
                 <div className="column">
                     <h2 className="ui image header">
                     <div className="content">
-                        Log-in to your account
+                        Create an account
                     </div>
                     </h2>
                     <div className="ui form error">
@@ -88,15 +88,11 @@ class Login extends React.Component {
                                 <input type="password" name="password" placeholder="Password" value={fields.password} onChange={this.handleChange} required/>
                             </div>
                             </div>
-                            <button type="submit" className="ui fluid large teal submit button">Login</button>
+                            <button type="submit" className="ui fluid large teal submit button">Register</button>
                         </div>
 
 
                     </form>
-
-                    <div className="ui message">
-                    Don't have an account? <a href="/register">Register</a>
-                    </div>
                 </div>
                 </div>
             </div>
@@ -107,4 +103,4 @@ class Login extends React.Component {
 
 
 }
-export default withRouter(Login);
+export default withRouter(Register);

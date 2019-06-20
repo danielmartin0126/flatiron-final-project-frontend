@@ -31,9 +31,9 @@ class Comment extends React.Component {
         // console.log("comments", this.props)
 
        return(
-            <div className="ui container comment showMeComments">
+            <div className="ui container comment">
                <h3>{this.props.comment.content}</h3>
-               {this.props.comment ? <a href={this.getPostAuthorID()}> {this.getPostAuthor()} </a>: "Lorem Ipsum"}
+               {this.props.comment ? <a id="commentAuthor" href={this.getPostAuthorID()}> {this.getPostAuthor()} </a>: "Lorem Ipsum"}
 
             </div>
        )

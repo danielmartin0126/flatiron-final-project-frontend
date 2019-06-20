@@ -36,16 +36,16 @@ class CommentModal extends React.Component {
 
     render() {
         return(
-  <Modal trigger={<Button className="ui mini icon button green followButton"><i className="plus icon"></i></Button>}>
-    <Modal.Header>Add comment</Modal.Header>
-    <Modal.Content>
+  <Modal trigger={<Button className="ui mini icon button blueFollowerButton yes okay cmon" id="newComment" ><i className="plus icon"></i></Button>}>
+    <Modal.Header className="modalColor yes okay cmon">Add comment</Modal.Header>
+    <Modal.Content className="modalColor yes okay cmon">
         <Form className="lol" onSubmit={(e)=>this.handleCommentSubmit(e)}>
             <Form.Field onChange={this.handleCommentChange}> 
                 <label></label>
                 <Form.TextArea>
                 </Form.TextArea>
             </Form.Field>
-            <Button type='submit'>Submit</Button>
+            <Button id="commentSubmit" type='submit'>Submit</Button>
         </Form>
     </Modal.Content>
   </Modal>

@@ -35,7 +35,6 @@ class Game extends React.Component {
     }
 
     totalFollowers = () => {
-        
         let count = this.props.followers.filter(follower => follower.game_id == this.state.currentGame.id)
         console.log("yahoo",count)
         console.log("followers",this.props.followers)
@@ -46,47 +45,86 @@ class Game extends React.Component {
         let postsList = this.props.posts.filter(post => post.game_id == this.state.currentGame.id)
         return (
             <div>
-                {postsList.map(post => <PostCard post={post} users={this.props.users}/>)}
+                {postsList.map(post => <div className="post postcard lined posts"><PostCard post={post} users={this.props.users} comments={this.props.comments}/></div>)}
             </div>
         )
 
     }
+    
+    renderFollowButton = () => {
+        if (this.props.followers.length) {
+            let checkFollow = this.props.followers.filter(follower => follower.game_id == this.state.currentGame.id)
+            // console.log("check follow", checkFollow)
+            if (checkFollow.length) {
+                return(<button className="mini ui icon button blueFollowerButton yes okay cmon followButton" onClick={()=>console.log("unfollow")}>
+                    <i className="heart icon"></i>
+                </button>)
+            } else {
+                return (<button className="mini ui icon button blueFollowerButton yes okay cmon followButton" onClick={()=>this.handleFollowClick(this.state.currentGame.id)}>
+                    <i className="plus icon"></i>
+                </button>)
+            }
+        }
+    }
+
+    handleFollowClick = (e) => {
+        console.log("follow", e)
+        let followedGame = this.props.games.find(game=> game.id === e)
+        let user = this.props.currentUser
+        console.log(followedGame,"yayassd")
+        this.props.handleGameFollower(followedGame)
+        fetch(`http://localhost:3000/api/v1/followed_games`,
+        {
+            headers: {
+                "Accept": 'application/json',
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({user_id: user.id, game_id: followedGame.id, app_id: followedGame.app_id})
+        })
+        .then(r => r.json())
+        .then(data => console.log("posted", data))
+    }
+
+    
 
     renderPage = () => {
         console.log("PROPS", this.props)
         return (
             <div>
             <div className="game ui grid flex center">
-                <div className="image gamePageHeader">
-                    <img src={`https://steamcdn-a.akamaihd.net/steam/apps/${this.state.currentGame.app_id}/header.jpg`}/>
-                </div>
-                <div className="content center">
-                    <h1 className="header">{this.state.currentGame.name}</h1>
-                    <div className="description">
-                        {this.state.currentGame.desc}
+                <div>
+                    <div className="image gamePageHeader">
+                        <img src={`https://steamcdn-a.akamaihd.net/steam/apps/${this.state.currentGame.app_id}/header.jpg`}/>
+                    </div>
+                    <div className="content center">
+                        <h1 className="header">{this.state.currentGame.name}</h1>
+                        <div className="description">
+                            {this.state.currentGame.desc}
+                        </div>
                     </div>
                 </div>
-                <div className="extra content flex followers">
+                <div id="gameDescription"className="extra content flex followers">
                     <p>
                         <i className="user icon"></i>
                         {this.props.posts ? this.totalFollowers(): null} Followers
                     
                     </p>
                     <div>
-                        <button className="mini ui icon button green followButton">
-                            <i className="plus icon"></i>
-                        </button>
+                        {this.renderFollowButton()}
                     </div>
                     
                 </div>
                 
                </div> 
-               <div className="ui divider"></div>
+               <div className="ui divider" id="gamedivider"></div>
                <div>
                     <h2>Posts</h2>
-                    <h4>Create new post</h4>
-                    <PostModal currentUser={this.props.currentUser} currentGame={this.state.currentGame} />
-                    <div className="ui container grid red">
+                    <div className="postBox">
+                        <h4>Create new post</h4>
+                        <PostModal currentUser={this.props.currentUser} currentGame={this.state.currentGame} />
+                    </div>
+                    <div className="ui container grid" id="startPosts">
                         {this.listPosts()}
                     </div>
 
@@ -116,12 +154,12 @@ class Game extends React.Component {
                 </div>
                 <div className="buttonBar">
                     <div>
-                        <button className="ui button inverted green ">
+                        <button className="ui button inverted blueFollowerButton yes okay cmon followButton ">
                             View Game
                         </button>
                     </div>
                     <div>
-                        <button className="mini ui icon button green followButton">
+                        <button className="mini ui icon button blueFollowerButton yes okay cmon followButton">
                             <i className="plus icon"></i>
                         </button>
                     </div>

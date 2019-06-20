@@ -29,16 +29,18 @@ class Profile extends React.Component {
     renderUserInfo = () => {
         if (this.props.currentUser) {
             return(
-                <div className="userInfo">
-                    <h1>{this.props.currentUser.username}</h1>
+                <div >
+                    <h1 id="userInfo">{this.props.currentUser.username}</h1>
                 </div>
             )
         }
     }
 
     getGameNameFromPostID = (poster_id) => {
-        let game = this.props.games.find(game => game.id === poster_id)
-        return game.name
+        if (this.props.games.length) {
+            let game = this.props.games.find(game => game.id === poster_id)
+            return game.name
+        }
     }
 
     renderUserPosts = () => {
@@ -46,8 +48,8 @@ class Profile extends React.Component {
             let posts= this.props.posts.filter(post => post.poster_id === this.props.currentUser.id)
             console.log("poots", posts)
             return (
-                <div>
-                    {posts.map(post => <div className="post showMe"><h3>{this.getGameNameFromPostID(post.game_id)}</h3><PostCard users={this.props.users} post={post}/></div>)}
+                <div className="post">
+                    {posts.map(post => <div className="postcard lined posts"><a href={'/games/' + post.game_id} className="blackText">{this.getGameNameFromPostID(post.game_id)}</a><PostCard users={this.props.users} post={post} comments={this.props.comments}/></div>)}
                 </div>
             )
         }

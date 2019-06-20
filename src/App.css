@@ -34,6 +34,7 @@
 
 .flex {
   display: flex;
+  justify-content: center
 }
 
 .center {
@@ -301,4 +302,23 @@ body {
   justify-content: center;
   margin-left: 15%;
   margin-right: 15%;
+}
+
+.friends {
+  display: flex;
+  flex-direction: column;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.friend.yes.okay.cmon {
+  color: #1A1B1C;
+}
+
+#gameNameOnPost {
+  font-weight: bolder;
+}
+
+.postFeed {
+  margin-top: 5%;
 }

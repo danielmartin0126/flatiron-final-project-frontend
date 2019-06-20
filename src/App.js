@@ -106,7 +106,7 @@ class App extends React.Component {
   handleGameFollower = (game) => {
     console.log("follow update")
     this.setState({
-      followers: [...this.state.followers, {game_id: game.id}]
+      followers: [...this.state.followers, {user_id: this.state.currentUser.id, game_id: game.id}]
 
     })
   }
@@ -144,21 +144,25 @@ class App extends React.Component {
     console.log('adding to results', game)
     this.setState({
       filteredGames: [...this.state.filteredGames, game]
-    })
-
+    }) 
   }
+      handleCommentAdded = (comment) => {
+        this.setState({
+          comments: [...this.state.filteredGames, comment]
+        })
+      }
 
   render (){
       {console.log("app is rendering", this.state)}
     return (<>
       {this.state.posts.length ? <div className="App">
       <Navbar currentUser={this.state.currentUser} handleLogOut={this.handleLogOut} handleGameSearch={this.handleGameSearch}/>
-      <Route exact path="/" render={()=> <Home currentUser={this.state.currentUser}/>}/>
+      <Route exact path="/" render={()=> <Home currentUser={this.state.currentUser} users={this.props.users} followers={this.state.followers} games={this.state.games} posts={this.state.posts} comments={this.state.comments}/>}/>
       <Route exact path="/games" render={()=><GamesContainer games={this.state.games} apiGames={this.state.apiGames} handleGamesAdded={this.handleGamesAdded} searchTerm={this.state.searchTerm} filteredGames={this.state.filteredGames} currentUser={this.state.currentUser} followers={this.state.followers} handleDeleteFollower={this.handleDeleteFollower} handleGameFollower={this.handleGameFollower}/>}/>
       <Route path="/games/:id" render={()=><Game followers={this.state.followers} currentUser={this.state.currentUser} handleGameFollower={this.handleGameFollower} games={this.state.games} posts={this.state.posts} users={this.state.users} comments={this.state.comments}/>}/>
       <Route exact path="/login" render={()=> <Login handleLogIn={this.handleLogIn} currentUser={this.state.currentUser}/>}/>
       <Route exact path="/register" render={()=> <Register handleLogIn={this.handleLogIn} currentUser={this.state.currentUser}/>}/>
-      <Route path="/posts/:id" render ={()=> <Post currentUser={this.state.currentUser} posts={this.state.posts} users={this.state.users} comments={this.state.comments}/>}/>
+      <Route path="/posts/:id" render ={()=> <Post currentUser={this.state.currentUser} posts={this.state.posts} users={this.state.users} comments={this.state.comments} games={this.state.games} handleCommentAdded={this.handleCommentAdded}/>}/>
       <Route exact path="/profile" render={()=> <Profile currentUser={this.state.currentUser} followers={this.state.followers} posts={this.state.posts} games={this.state.games} comments={this.state.comments} users={this.state.users} friends={this.state.friends}/>}/>
       <Route path="/profile/:id" render={()=> <UserProfile currentUser={this.state.currentUser} handleFriendReq={this.handleFriendReq} friends={this.state.friends} comments={this.state.comments} followers={this.state.followers} posts={this.state.posts} games={this.state.games} users={this.state.users}/>}/>
 

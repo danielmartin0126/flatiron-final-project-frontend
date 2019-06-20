@@ -46,7 +46,7 @@ class Profile extends React.Component {
     renderUserPosts = () => {
         if (this.props.posts.length && this.props.currentUser) {
             let posts= this.props.posts.filter(post => post.poster_id === this.props.currentUser.id)
-            console.log("poots", posts)
+            // console.log("poots", posts)
             return (
                 <div className="post">
                     {posts.map(post => <div className="postcard lined posts"><a href={'/games/' + post.game_id} className="blackText">{this.getGameNameFromPostID(post.game_id)}</a><PostCard users={this.props.users} post={post} comments={this.props.comments}/></div>)}
@@ -78,13 +78,13 @@ class Profile extends React.Component {
 
     renderFriends = () => {
         if (this.props.currentUser && this.props.friends.length) {
-            console.log("my friends",this.props.friends.filter(friend => friend.user_id === this.props.currentUser.id))
+            // console.log("my friends",this.props.friends.filter(friend => friend.user_id === this.props.currentUser.id))
             let friends = this.props.friends.filter(friend => friend.user_id === this.props.currentUser.id)
             if (this.props.users.length) {
                 return (
                     <div className="friends">
                         <h4>Friends</h4>
-                       {friends.map(friend => <a href={`/profile/${friend.friend_id}`}>{this.props.users.find(user => user.id === friend.friend_id).name}</a>)} 
+                       {friends.map(friend => <a class="friend blackText yes okay cmon" href={`/profile/${friend.friend_id}`}>{this.props.users.find(user => user.id === friend.friend_id).name}</a>)} 
                     </div>
                 )
             }

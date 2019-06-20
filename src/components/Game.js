@@ -122,7 +122,7 @@ class Game extends React.Component {
                     <h2>Posts</h2>
                     <div className="postBox">
                         <h4>Create new post</h4>
-                        <PostModal currentUser={this.props.currentUser} currentGame={this.state.currentGame} />
+                        <PostModal currentUser={this.props.currentUser} currentGame={this.state.currentGame} posts={this.props.posts}/>
                     </div>
                     <div className="ui container grid" id="startPosts">
                         {this.listPosts()}

@@ -47,11 +47,11 @@ class GamesContainer extends React.Component {
     renderGames = () => {
       
         if (!this.props.searchTerm.length && this.props.games.length) {
-            console.log("in here",this.props.games.slice(0,this.state.count))
+            // console.log("in here",this.props.games.slice(0,this.state.count))
             return this.props.games.slice(0,this.state.count).map(game => <GameCard game={game} followers={this.props.followers} games={this.props.games} currentUser={this.props.currentUser} handleDeleteFollower={this.props.handleDeleteFollower} handleGameFollower={this.props.handleGameFollower}/>)
         }
         else {
-            console.log("inthere")
+            // console.log("inthere")
             if (this.props.filteredGames.length) {
                 return this.props.filteredGames.slice(0,this.state.count).map(game => <GameCard game={game} followers={this.props.followers} games={this.props.games} currentUser={this.props.currentUser} handleDeleteFollower={this.props.handleDeleteFollower} handleGameFollower={this.props.handleGameFollower}/>)
             }

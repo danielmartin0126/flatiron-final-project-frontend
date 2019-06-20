@@ -133,7 +133,7 @@ class UserProfile extends React.Component {
                 return (
                     <div className="friends">
                         <h4>Friends</h4>
-                       {friends.map(friend => <a href={`/profile/${friend.friend_id}`}>{this.props.users.find(user => user.id === friend.friend_id).name}</a>)} 
+                       {friends.map(friend => <a class="friend blackText yes okay cmon" href={`/profile/${friend.friend_id}`}>{this.props.users.find(user => user.id === friend.friend_id).name}</a>)} 
                     </div>
                 )
             }

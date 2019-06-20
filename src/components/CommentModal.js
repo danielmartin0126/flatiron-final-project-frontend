@@ -28,10 +28,13 @@ class CommentModal extends React.Component {
             body: JSON.stringify({user_id: this.props.currentUser.id, post_id: this.props.currentPost.id, comment:this.state.commentContent})
         })
         .then(r => r.json())
-        .then(data => this.setState({
+        .then(data => this.props.handleCommentAdded(data))
+        .then(
+            this.setState({
             commentContent: ""
         }, window.location.reload()
-        ))
+        )
+        )   
     }
 
     render() {

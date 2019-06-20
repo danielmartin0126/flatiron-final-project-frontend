@@ -10,12 +10,14 @@ class PostCard extends React.Component {
 
 
     getPostAuthor = () => {
+        if (this.props.users) {
+            let user = this.props.users.find( user => user.id == this.props.post.poster_id)
+            if (user) {
+                return user.name
+            }
+        }
     //     console.log("post",this.props.post)
     //    console.log("oot",this.props.users.find( user => user.id == this.props.post.poster_id))
-       let user = this.props.users.find( user => user.id == this.props.post.poster_id)
-       if (user) {
-           return user.name
-       }
     }
 
     numberOfComments = () => {

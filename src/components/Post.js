@@ -48,6 +48,14 @@ class Post extends React.Component {
         }
     }
 
+    getGameName = () => {
+        if (this.props.games.length && this.state.currentPost) {
+            let game = this.props.games.filter(game => game.id === this.state.currentPost.game_id)[0]
+            console.log("get game name", game)
+            return <a id="gameNameOnPost"className="blackText" href={"/games/" + game.id}>{game.name}</a>
+        }
+    }
+
 
 
    
@@ -57,6 +65,7 @@ class Post extends React.Component {
 
        return(
            <div className="postHeader">
+               {this.getGameName()}
                <h1 id="postTitle">{this.state.currentPost ? this.state.currentPost.title : "Lorem Ipsum"}</h1>
                <h5 id="postBody">{this.state.currentPost ? this.state.currentPost.content : "Lorem Ipsum"}</h5>
                {this.state.currentPost ? <a id="postAuthor" href={this.getPostAuthorID()}> {this.getPostAuthor()} </a>: "Lorem Ipsum"}
@@ -65,7 +74,7 @@ class Post extends React.Component {
 
                <div id="addComments" className="comments postBox">
                    <h4 id="addAComment">Add a comment</h4>
-               {this.state.currentPost ? <CommentModal currentUser={this.props.currentUser} currentGame={this.props.currentGame} currentPost={this.state.currentPost}/>: null}
+               {this.state.currentPost ? <CommentModal currentUser={this.props.currentUser} currentGame={this.props.currentGame} currentPost={this.state.currentPost} handleCommentAdded={this.props.handleCommentAdded}/>: null}
                </div>
                 <div className="ui container grid">
                   {this.renderComments()}

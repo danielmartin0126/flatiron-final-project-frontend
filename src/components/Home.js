@@ -42,7 +42,7 @@ class Home extends React.Component {
        return(
            <div className="home">
                <div className="header">
-                <h1>codename: BEEF FORCE</h1>
+                <h1>Steam Condenser</h1>
                </div>
                <div className="mainContent">
                     <h3>Your post feed</h3>
